@@ -1,7 +1,7 @@
 {
     "name": "module-17",
     "version": "1.0.0",
-   "main": "server.js",
+    "main": "server.js",
     "type": "module",
     "scripts": {
       "build": "npx tsc",
