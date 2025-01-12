@@ -1,7 +1,7 @@
 import  { Request, Response } from 'express';
-import User from '../models/User';
+import { User } from '../models/index';
 
-export const getAllUsers = async (req: Request, res: Response) => {
+export const getAllUsers = async (_req: Request, res: Response) => {
     try {
         const users = await User.find();
         res.json(users);
@@ -37,7 +37,7 @@ export const createUser = async (req: Request, res: Response) => {
         const newUser = await User.create({ username, email });
         res.status(201).json(newUser);
     } catch (error: any) {
-        res.status(400).json({
+        res.status(500).json({
             message: error.message
         });
     }
@@ -58,7 +58,7 @@ export const updateUser = async (req: Request, res: Response) => {
         }
         res.json(user);
     } catch (error: any) {
-        res.status(400).json({
+        res.status(500).json({
             message: error.message
         });
     }
@@ -97,7 +97,7 @@ export const addFriend = async (req: Request, res: Response) => {
         }
         res.json(user);
     } catch (error: any) {
-        res.status(400).json({
+        res.status(500).json({
             message: error.message
         });
     }
@@ -105,10 +105,9 @@ export const addFriend = async (req: Request, res: Response) => {
 
 export const deleteFriend = async (req: Request, res: Response) => {
     try {
-        const user = await User.findOneAndUpdate(
+        const user = await User.findOneAndDelete(
             { _id: req.params.userId },
-            { $pull: { friends: req.params.friendId } },
-            { runValidators: true, new: true }
+            { $pull: { friends: req.params.friendId } }
         );
         if (!user) {
             res.status(404).json({
@@ -118,7 +117,7 @@ export const deleteFriend = async (req: Request, res: Response) => {
         }
         res.json(user);
     } catch (error: any) {
-        res.status(400).json({
+        res.status(500).json({
             message: error.message
         });
     }

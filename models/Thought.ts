@@ -1,11 +1,11 @@
-import { Schema, model } from 'mongoose';
-import reactionSchema from './Reaction';
+import { Schema, model, Document } from 'mongoose';
+import Reaction from './Reaction';
 
 interface IThought extends Document {
     thoughtText: string;
     createdAt: Date;
     username: string;
-    reactions: [];
+    reactions: typeof Reaction[];
 }
 
 const thoughtSchema = new Schema<IThought>(
@@ -24,7 +24,7 @@ const thoughtSchema = new Schema<IThought>(
             type: String,
             required: true,
         },
-        reactions: [reactionSchema],
+        reactions: [Reaction],
     },
     {
         toJSON: {
@@ -39,6 +39,6 @@ thoughtSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
 });
 
-const Thought = model('Thought', thoughtSchema);
+const Thought = model('thought', thoughtSchema);
 
 export default Thought;
