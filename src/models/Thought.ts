@@ -23,7 +23,7 @@ const thoughtSchema = new Schema<IThought>(
         username: [
             {
             type: Schema.Types.ObjectId,
-            ref: 'User',
+            required: true,
             }
         ],
         reactions: [Reaction],
@@ -41,6 +41,6 @@ thoughtSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
 });
 
-const Thought = model('thought', thoughtSchema);
+const Thought = model('Thought', thoughtSchema);
 
 export default Thought;

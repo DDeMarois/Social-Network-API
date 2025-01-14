@@ -1,4 +1,4 @@
-import { Thought } from '../models/index';
+import { Thought } from '../models/index.js';
 export const getAllThoughts = async (_req, res) => {
     try {
         const thoughts = await Thought.find();

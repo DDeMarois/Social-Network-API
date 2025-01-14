@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import Reaction from './Reaction';
+import Reaction from './Reaction.js';
 const thoughtSchema = new Schema({
     thoughtText: {
         type: String,
@@ -14,7 +14,7 @@ const thoughtSchema = new Schema({
     username: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'User',
+            required: true,
         }
     ],
     reactions: [Reaction],
@@ -28,5 +28,5 @@ const thoughtSchema = new Schema({
 thoughtSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
 });
-const Thought = model('thought', thoughtSchema);
+const Thought = model('Thought', thoughtSchema);
 export default Thought;

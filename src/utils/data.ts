@@ -1,17 +1,18 @@
-const user = [
+// Sample data arrays
+const users = [
     'johnDoe123',
     'janeSmith456',
     'alexJohnson789',
     'emilyBrown101',
-    'michaelWhite202'
+    'michaelWhite202',
 ];
 
 const email = [
-    'johnDoe123@example.com',
-    'janeSmith456@example.com',
-    'alexJohnson789@example.com',
-    'emilyBrown101@example.com',
-    'michaelWhite202@example.com'
+    'johnDoe123@gmail.com',
+    'janeSmith456@gmail.com',
+    'alexJohnson789@gmail.com',
+    'emilyBrown101@gmail.com',
+    'michaelWhite202@gmail.com',
 ];
 
 const thoughts = [
@@ -19,14 +20,14 @@ const thoughts = [
     'I love to read!',
     'I love to travel!',
     'I love to eat!',
-    'I love to sleep!'
+    'I love to sleep!',
 ];
 
 const friends = [
     'janeSmith456',
     'alexJohnson789',
     'emilyBrown101',
-    'michaelWhite202'
+    'michaelWhite202',
 ];
 
 const possibleReactions = [
@@ -34,49 +35,53 @@ const possibleReactions = [
     'dislike',
     'love',
     'hate',
-    'laugh'
+    'laugh',
 ];
 
-const getRandomArrItem = (arr: any[]) =>
-    arr[Math.floor(Math.random() * arr.length)];
+// Generate a random user object
+const getRandomUser = (users: any[]): { username: string, email: string, thoughts: string, friends: string } => {
+    return {
+        username: users[getRandomIndex(users)],
+        email: email[getRandomIndex(email)],
+        thoughts: thoughts[getRandomIndex(thoughts)],
+        friends: friends[getRandomIndex(friends)],
+    };
+};
 
-const getRandomThought = (int: number) => {
+// Generate a random number of thought objects
+const getRandomThought = (): { thoughtText: string, username: string, reactions: { reactionBody: string, username: string }[] }[] => {
     let results = [];
-    for (let i = 0; i < int; i++) {
+    for (let i = 0; i < thoughts.length; i++) {
         results.push({
             thoughtText: thoughts[i],
-            username: user[i],
-            reactions: [...getReactionTags(i)]
+            username: users[i],
+            reactions: [...getReactionTags()],
         });
     }
     return results;
 };
 
-const getRandomUser = (int: number) => {
+// Generate a random number of reaction tags
+const getReactionTags = (): { reactionBody: string, username: string }[] => {
     let results = [];
-    for (let i = 0; i < int; i++) {
-        results.push({
-            username: user[i],
-            email: email[i],
-            thoughts: [getRandomThought(1)],
-            friends: [getRandomArrItem(friends)]
-        });
-    }
-    return results;
-};
-
-const getReactionTags = (int: number) => {
-    if (int === 1) {
-        return getRandomArrItem(possibleReactions);
-    }
-    const results = [];
-    for (let i = 0; i < int; i++) {
+    for (let i = 0; i < 3; i++) {
         results.push({
             reactionBody: getRandomArrItem(possibleReactions),
-            username: getRandomArrItem(user)
+            username: users[getRandomIndex(users)],
         });
     }
     return results;
 };
 
-export { getRandomThought, getRandomUser };
+// Generate a random index
+const getRandomIndex = (arr: any[]): number => {
+    return Math.floor(Math.random() * arr.length);
+};
+
+// Get a random item from an array
+const getRandomArrItem = (arr: any[]): any => {
+    return arr[Math.floor(Math.random() * arr.length)];
+};
+
+// Export functions for use in other modules
+export { getReactionTags, getRandomUser, getRandomThought, getRandomIndex, getRandomArrItem };

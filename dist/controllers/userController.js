@@ -1,4 +1,4 @@
-import { User } from '../models/index';
+import { User } from '../models/index.js';
 export const getAllUsers = async (_req, res) => {
     try {
         const users = await User.find();
